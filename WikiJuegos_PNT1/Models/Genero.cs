@@ -1,4 +1,4 @@
-﻿namespace WebApplication1.Models
+﻿namespace WikiJuegos_PNT1.Models
 
 {
     public enum Genero
