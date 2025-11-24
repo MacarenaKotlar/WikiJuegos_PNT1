@@ -12,6 +12,7 @@ namespace WikiJuegos_PNT1.Models
 
         public required string Nombre { get; set; }
         public required string Desarrollador { get; set; }
+        public required string Descripcion { get; set; }
 
         [Display(Name = "Fecha de lanzamiento")]
         public DateTime FechaLanzamiento { get; set; }
