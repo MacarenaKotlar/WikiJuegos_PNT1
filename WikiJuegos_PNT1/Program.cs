@@ -28,8 +28,8 @@ builder.Services.Configure<CookiePolicyOptions>(options =>
     options.MinimumSameSitePolicy = SameSiteMode.None;
 });
 builder.Services.AddDbContext<WikiJuegosDatabaseContext>(options =>
-    options.UseSqlServer(builder.Configuration["ConnectionString:WikiJuegosDBConnection"
-]));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("WikiJuegosDBConnection"
+)));
 
 var app = builder.Build();
 
