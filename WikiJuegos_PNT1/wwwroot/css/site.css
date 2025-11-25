@@ -1,22 +1,97 @@
+/* --- base existente --- */
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    font-family: "Segoe UI", Arial, sans-serif;
+    color: #222;
+    background: #fff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding-top: 15px; /* agregado */
+}
+
+/* --- variables --- */
+:root {
+    --primary: #1b6ec2;
+    --muted: #6c757d;
+    --bg: #f8f9fa;
+}
+
+/* header */
+.navbar-brand {
+    color: var(--primary);
+    font-weight: 700;
+}
+
+/* hero */
+.hero {
+    background: linear-gradient(90deg, rgba(27,110,194,0.06), rgba(27,110,194,0.01));
+    padding: 18px;
+    border-radius: 8px;
+    margin-bottom: 18px;
+}
+
+/* card */
+.card {
+    border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+
+    .card:hover {
+        transform: translateY(-2px);
+        transition: 0.15s ease-in-out;
+        box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+    }
+
+/* table */
+.table thead th {
+    background: #f5f7fb;
+}
+
+/* typography */
+h1, h2, h3 {
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+/* links */
+a:hover {
+    opacity: 0.8;
+    transition: 0.2s;
+}
+
+/* footer */
+footer {
+    background: var(--bg);
+}
+
+/* container */
+.container {
+    max-width: 1000px;
+}
+
+/* responsive */
+@media (max-width:767px) {
+    .hero {
+        text-align: center;
+    }
 }
