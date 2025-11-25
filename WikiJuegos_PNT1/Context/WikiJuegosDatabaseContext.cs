@@ -15,5 +15,22 @@ namespace WikiJuegos_PNT1.Context
         {
         }
         public DbSet<Juego> Juegos { get; set; }
+        public DbSet<Usuario> Usuario { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Usuario>(tabla =>
+            {
+                tabla.HasKey(col => col.Id);
+                tabla.Property(col => col.Id)
+                .UseIdentityColumn()
+                .ValueGeneratedOnAdd();
+
+                tabla.Property(col => col.Nombre).HasMaxLength(50);
+                tabla.Property(col => col.Contra).HasMaxLength(50);
+            });
+        }
     }
 }
