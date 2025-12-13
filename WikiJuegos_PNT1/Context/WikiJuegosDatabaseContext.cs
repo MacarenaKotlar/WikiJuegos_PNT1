@@ -16,6 +16,7 @@ namespace WikiJuegos_PNT1.Context
         }
         public DbSet<Juego> Juegos { get; set; }
         public DbSet<Usuario> Usuario { get; set; }
+        public DbSet<Comentario> Comentarios { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
