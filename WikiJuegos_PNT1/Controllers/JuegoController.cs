@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using WikiJuegos_PNT1.Context;
 using WikiJuegos_PNT1.Models;
@@ -23,6 +25,29 @@ namespace WikiJuegos_PNT1.Controllers
         public async Task<IActionResult> Index()
         {
             return View(await _context.Juegos.ToListAsync());
+        }
+
+        // GET: Juego/Buscar
+
+        public async Task<IActionResult> Buscar(string? buscar)
+        {
+            if(buscar != null)
+            {
+                var juegos = await _context.Juegos.ToListAsync();
+                List<Juego> lstJuegos = new List<Juego>();
+                foreach (var juego in juegos)
+                {
+                    if (juego.Nombre.ToUpper().Contains(buscar.ToUpper()))
+                    {
+                        lstJuegos.Add(juego);
+                    }
+                    
+                }
+
+                return View("Index", lstJuegos);
+            }
+
+            return View("Index", await _context.Juegos.ToListAsync());
         }
 
         // GET: Juego/Details/5
