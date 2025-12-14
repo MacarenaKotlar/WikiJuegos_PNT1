@@ -1,0 +1,62 @@
+﻿@model IEnumerable<WikiJuegos_PNT1.Models.Comentario>
+
+@{
+    ViewData["Title"] = "Foro";
+}
+
+<div class="text-center my-4">
+    <h1 class="display-4">Foro de la Comunidad</h1>
+    <p class="lead">Dejá tu opinión sobre los juegos</p>
+</div>
+
+<p class="mb-3">
+    <a asp-action="Create" class="btn btn-primary">➕ Nuevo Comentario</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Texto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Puntaje)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Fecha)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UsuarioNombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Juego)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Texto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Puntaje)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Fecha)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UsuarioNombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Juego.Desarrollador)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
