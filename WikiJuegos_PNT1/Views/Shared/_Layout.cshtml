@@ -11,47 +11,47 @@
     <link rel="stylesheet" href="~/WikiJuegos_PNT1.styles.css" asp-append-version="true" />
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom shadow-sm">
-            <div class="container">
-                <a class="navbar-brand d-flex align-items-center" asp-controller="Home" asp-action="Index">
-                    <img src="~/images/logo-small.png" onerror="this.style.display='none'" alt="logo" style="height:40px; margin-right:10px" />
-                    <div>
-                        <div class="h5 mb-0 text-primary">WikiJuegos</div>
-                        <small class="text-muted">Curiosidades y fichas de juegos</small>
-                    </div>
-                </a>
+    <div>
+        <header>
+            <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom shadow-sm">
+                <div class="container">
+                    <a class="navbar-brand d-flex align-items-center" asp-controller="Home" asp-action="Index">
+                        <img src="~/images/logo-small.png" onerror="this.style.display='none'" alt="logo" style="height:40px; margin-right:10px" />
+                        <div>
+                            <div class="h5 mb-0 text-primary">WikiJuegos</div>
+                            <small class="text-muted">Curiosidades y fichas de juegos</small>
+                        </div>
+                    </a>
 
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
 
-                <div class="collapse navbar-collapse" id="mainNav">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-4">
-                        <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Index">Inicio</a></li>
-                        <li class="nav-item"><a class="nav-link" asp-controller="Juego" asp-action="Index">Juegos</a></li>
-                        <li class="nav-item"><a class="nav-link" asp-controller="Comentarios" asp-action="Index">Foro</a></li>
-                        <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Privacy">Privacy</a></li>
-                    </ul>
+                    <div class="collapse navbar-collapse" id="mainNav">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-4">
+                            <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Index">Inicio</a></li>
+                            <li class="nav-item"><a class="nav-link" asp-controller="Juego" asp-action="Index">Juegos</a></li>
+                        </ul>
 
-                    <div class="d-flex align-items-center">
-                        @{
-                            if (User.Identity!.IsAuthenticated)
-                            {
-                                var userName = User.Claims.Where(c => c.Type == ClaimTypes.Name).Select(c => c.Value).SingleOrDefault();
-                                <span class="me-3 small">Hola, <strong>@userName</strong></span>
-                                <a class="btn btn-sm btn-outline-danger" asp-controller="Home" asp-action="Cerrar">Cerrar</a>
+                        <div class="d-flex align-items-center">
+                            @{
+                                if (User.Identity!.IsAuthenticated)
+                                {
+                                    var userName = User.Claims.Where(c => c.Type == ClaimTypes.Name).Select(c => c.Value).SingleOrDefault();
+                                    <span class="me-3 small">Hola, <strong>@userName</strong></span>
+                                    <a class="btn btn-sm btn-outline-danger" asp-controller="Home" asp-action="Cerrar">Cerrar</a>
+                                }
                             }
-                        }
+                        </div>
                     </div>
                 </div>
-            </div>
-        </nav>
-    </header>
+            </nav>
+        </header>
 
-    <main class="container my-4">
-        @RenderBody()
-    </main>
+        <main class="container my-4">
+            @RenderBody()
+        </main>
+    </div>
 
     <footer class="border-top bg-light py-3 mt-4">
         <div class="container text-center small text-muted">

@@ -23,46 +23,25 @@
     }
 </p>
 
-<table class="table table-hover">
-    <thead>
-        <tr>
-            <th>Nombre</th>
-            <th>Desarrollador</th>
-            <th>Descripción</th>
-            <th>Fecha</th>
-            <th>Género</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-    @if (Model != null && Model.Any())
-    {
-        foreach (var item in Model)
+@if (Model != null && Model.Any())
+{
+    <div class="card-container">
+        @foreach (var item in Model)
         {
-            <tr>
-                <td>@item.Nombre</td>
-                <td>@item.Desarrollador</td>
-                <td>@item.Descripcion</td>
-                <td>@item.FechaLanzamiento.ToShortDateString()</td>
-                <td>@item.Genero</td>
-                <td>
-                    <a asp-action="Details" asp-route-id="@item.Id">Detalles</a>
-                    @{
-                        if (userId == "1")
-                        {
-                            <span>|</span>
-                            <a asp-action="Edit" asp-route-id="@item.Id">Editar</a>
-                            <span>|</span>
-                            <a asp-action="Delete" asp-route-id="@item.Id">Borrar</a>
-                        }
-                    }
-                </td>
-            </tr>
+            <div class="card">
+                <a asp-action="Details" asp-route-id="@item.Id">
+                    <div class="card-content">
+                        <h4>@item.Nombre</h4>
+                        <hb></hb>
+                        <p>Desarrollador: @item.Desarrollador</p>
+                        <p>Género: @item.Genero</p>
+                    </div>
+                </a>
+            </div>
         }
-    }
-    else
-    {
-        <tr><td colspan="6">No hay juegos para mostrar.</td></tr>
-    }
-    </tbody>
-</table>
+    </div>
+}
+else
+{
+    <p>No hay juegos para mostrar.</p>
+}
