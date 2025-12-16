@@ -17,20 +17,20 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="JuegoId" />
             <div class="form-group">
-                <label asp-for="Texto" class="control-label"></label>
-                <input asp-for="Texto" class="form-control" />
+                <input asp-for="Texto" class="form-control" style="width: 100%" placeholder="Escriba su texto"/>
                 <span asp-validation-for="Texto" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Puntaje" class="control-label"></label>
-                <input asp-for="Puntaje" class="form-control" />
+                <input asp-for="Puntaje" type="number" min="1" max="5" class="form-control" />
                 <span asp-validation-for="Puntaje" class="text-danger"></span>
             </div>
             @{
                 var userId = User.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).Select(c => c.Value).SingleOrDefault();
             }
+            <hb>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Enviar" class="btn btn-primary" />
             </div>
         </form>
     </div>
