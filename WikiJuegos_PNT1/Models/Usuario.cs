@@ -5,5 +5,6 @@
         public int Id { get; set; }
         public required string Nombre { get; set; }
         public required string Contra { get; set; }
+        public List<Comentario>? Comentarios { get; set; }
     }
 }

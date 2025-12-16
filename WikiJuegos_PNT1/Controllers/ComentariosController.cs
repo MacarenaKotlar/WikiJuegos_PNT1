@@ -1,10 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
 using WikiJuegos_PNT1.Context;
 using WikiJuegos_PNT1.Models;
 
@@ -46,9 +47,9 @@ namespace WikiJuegos_PNT1.Controllers
         }
 
         // GET: Comentarios/Create
-        public IActionResult Create()
+        public IActionResult Create(int juegoId)
         {
-            ViewData["JuegoId"] = new SelectList(_context.Juegos, "Id", "Desarrollador");
+            ViewData["JuegoId"] = juegoId;
             return View();
         }
 
@@ -57,16 +58,23 @@ namespace WikiJuegos_PNT1.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Texto,Puntaje,Fecha,UsuarioNombre,JuegoId")] Comentario comentario)
+        public async Task<IActionResult> Create([Bind("Texto,Puntaje,JuegoId")] Comentario comentario)
         {
             if (ModelState.IsValid)
             {
+                var userId = User.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).Select(c => c.Value).SingleOrDefault();
+                if (userId != null)
+                {
+                    comentario.UsuarioId = int.Parse(userId);
+                }
+
+                comentario.Fecha = DateTime.Now;
+
                 _context.Add(comentario);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", "Juego", new { id = comentario.JuegoId });
             }
-            ViewData["JuegoId"] = new SelectList(_context.Juegos, "Id", "Desarrollador", comentario.JuegoId);
-            return View(comentario);
+            return RedirectToAction("Index", "Juego");
         }
 
         // GET: Comentarios/Edit/5
@@ -82,7 +90,6 @@ namespace WikiJuegos_PNT1.Controllers
             {
                 return NotFound();
             }
-            ViewData["JuegoId"] = new SelectList(_context.Juegos, "Id", "Desarrollador", comentario.JuegoId);
             return View(comentario);
         }
 
@@ -91,9 +98,11 @@ namespace WikiJuegos_PNT1.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Texto,Puntaje,Fecha,UsuarioNombre,JuegoId")] Comentario comentario)
+        public async Task<IActionResult> Edit([Bind("Id, Texto,Puntaje")] Comentario comentario)
         {
-            if (id != comentario.Id)
+            var comentarioDb = await _context.Comentarios.FindAsync(comentario.Id);
+
+            if (comentarioDb == null)
             {
                 return NotFound();
             }
@@ -102,7 +111,8 @@ namespace WikiJuegos_PNT1.Controllers
             {
                 try
                 {
-                    _context.Update(comentario);
+                    comentarioDb.Texto = comentario.Texto;
+                    comentarioDb.Puntaje = comentario.Puntaje;
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -116,10 +126,8 @@ namespace WikiJuegos_PNT1.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
             }
-            ViewData["JuegoId"] = new SelectList(_context.Juegos, "Id", "Desarrollador", comentario.JuegoId);
-            return View(comentario);
+            return RedirectToAction("Details", "Juego", new { id = comentarioDb.JuegoId });
         }
 
         // GET: Comentarios/Delete/5
@@ -147,13 +155,16 @@ namespace WikiJuegos_PNT1.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var comentario = await _context.Comentarios.FindAsync(id);
-            if (comentario != null)
+
+            if (comentario == null)
             {
-                _context.Comentarios.Remove(comentario);
+                return NotFound();
             }
 
+            var juegoId = comentario!.JuegoId;
+            _context.Comentarios.Remove(comentario);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Details", "Juego", new { id = juegoId });
         }
 
         private bool ComentarioExists(int id)

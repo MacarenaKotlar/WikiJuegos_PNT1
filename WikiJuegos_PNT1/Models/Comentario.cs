@@ -19,12 +19,13 @@ namespace WikiJuegos_PNT1.Models
         public DateTime Fecha { get; set; } = DateTime.Now;
 
         // Guardamos el nombre de quien comentó para mostrarlo en el foro
-        public string? UsuarioNombre { get; set; }
+        [ForeignKey("UsuarioId")]
+        public int? UsuarioId { get; set; }
 
         // RELACIÓN: Un comentario pertenece a UN juego
+        [ForeignKey("JuegoId")]
         public int JuegoId { get; set; }
 
-        [ForeignKey("JuegoId")]
         public Juego? Juego { get; set; }
     }
 } 

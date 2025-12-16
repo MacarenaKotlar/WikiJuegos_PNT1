@@ -25,10 +25,7 @@
                 @Html.DisplayNameFor(model => model.Fecha)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.UsuarioNombre)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Juego)
+                @Html.DisplayNameFor(model => model.UsuarioId)
             </th>
             <th></th>
         </tr>
@@ -46,10 +43,7 @@
                 @Html.DisplayFor(modelItem => item.Fecha)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.UsuarioNombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Juego.Desarrollador)
+                @Html.DisplayFor(modelItem => item.UsuarioId)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

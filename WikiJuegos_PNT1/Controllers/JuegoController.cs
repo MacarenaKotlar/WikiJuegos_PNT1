@@ -59,6 +59,7 @@ namespace WikiJuegos_PNT1.Controllers
             }
 
             var juego = await _context.Juegos
+                .Include(j => j.Comentarios)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (juego == null)
             {

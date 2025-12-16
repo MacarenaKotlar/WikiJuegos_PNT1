@@ -7,6 +7,7 @@
 
 <h1>Detalles</h1>
 
+<a asp-action="Index">🡠 Volver a la lista</a>
 <div>
     <h4>Juego</h4>
     <hr />
@@ -50,7 +51,64 @@
         {
             <a asp-action="Edit" asp-route-id="@Model?.Id">Editar</a>
             <span>|</span>
+            <a asp-action="Delete" asp-route-id="@Model?.Id">Editar</a>
         }
     }
-    <a asp-action="Index">Volver a la lista</a>
 </div>
+
+<div class="my-4">
+    <h4 class="display-4">Foro de la Comunidad</h4>
+    <p class="lead">Dejá tu opinión sobre los juegos</p>
+    @if(Model != null)
+    {
+        <p class="mb-3">
+            <button onclick="activarVistaComentario('nuevoComentario', 'cancelarNuevoComentario')">➕ Nuevo Comentario</button>
+            <div id="nuevoComentario" style="display: none">
+                @await Html.PartialAsync("~/Views/Comentarios/Create.cshtml", new WikiJuegos_PNT1.Models.Comentario { JuegoId = Model.Id })
+            </div>
+            <button id="cancelarNuevoComentario" onclick="cancelar('nuevoComentario', 'cancelarNuevoComentario')" style="display: none">Cancelar</button>
+        </p>
+        if(Model.Comentarios != null){
+            <table>
+                @foreach(var item in Model.Comentarios){
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Texto)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Puntaje)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Fecha)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.UsuarioId)
+                        </td>
+                        <td>
+
+                            @if(userId == item.UsuarioId.ToString())
+                            {
+                                <a asp-action="Edit" asp-controller="Comentarios" asp-route-id="@item.Id">Editar</a>
+                                <span>|</span>
+                                <a asp-action="Delete" asp-controller="Comentarios" asp-route-id="@item.Id">Borrar</a>
+                            }
+                        </td>
+                    </tr>
+                }
+            </table>
+        }
+    }
+</div>
+
+<script>
+    function activarVistaComentario(idComentario, idCancelar){
+        document.getElementById(idComentario).style.display = "block";
+        document.getElementById(idCancelar).style.display = "block";
+    }
+
+    function cancelar(idComentario, idCancelar){
+        document.getElementById(idComentario).style.display = "none";
+        document.getElementById(idCancelar).style.display = "none";
+    }
+</script>
+

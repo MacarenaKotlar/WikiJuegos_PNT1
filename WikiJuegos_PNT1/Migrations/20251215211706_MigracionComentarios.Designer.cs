@@ -12,8 +12,8 @@ using WikiJuegos_PNT1.Context;
 namespace WikiJuegos_PNT1.Migrations
 {
     [DbContext(typeof(WikiJuegosDatabaseContext))]
-    [Migration("20251213155033_AgregueComentarios")]
-    partial class AgregueComentarios
+    [Migration("20251215211706_MigracionComentarios")]
+    partial class MigracionComentarios
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -47,12 +47,14 @@ namespace WikiJuegos_PNT1.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<string>("UsuarioNombre")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("UsuarioId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("JuegoId");
+
+                    b.HasIndex("UsuarioId");
 
                     b.ToTable("Comentarios");
                 });
@@ -122,10 +124,19 @@ namespace WikiJuegos_PNT1.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("WikiJuegos_PNT1.Models.Usuario", null)
+                        .WithMany("Comentarios")
+                        .HasForeignKey("UsuarioId");
+
                     b.Navigation("Juego");
                 });
 
             modelBuilder.Entity("WikiJuegos_PNT1.Models.Juego", b =>
+                {
+                    b.Navigation("Comentarios");
+                });
+
+            modelBuilder.Entity("WikiJuegos_PNT1.Models.Usuario", b =>
                 {
                     b.Navigation("Comentarios");
                 });

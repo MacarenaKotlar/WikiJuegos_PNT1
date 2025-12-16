@@ -44,12 +44,14 @@ namespace WikiJuegos_PNT1.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<string>("UsuarioNombre")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("UsuarioId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("JuegoId");
+
+                    b.HasIndex("UsuarioId");
 
                     b.ToTable("Comentarios");
                 });
@@ -119,10 +121,19 @@ namespace WikiJuegos_PNT1.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("WikiJuegos_PNT1.Models.Usuario", null)
+                        .WithMany("Comentarios")
+                        .HasForeignKey("UsuarioId");
+
                     b.Navigation("Juego");
                 });
 
             modelBuilder.Entity("WikiJuegos_PNT1.Models.Juego", b =>
+                {
+                    b.Navigation("Comentarios");
+                });
+
+            modelBuilder.Entity("WikiJuegos_PNT1.Models.Usuario", b =>
                 {
                     b.Navigation("Comentarios");
                 });
