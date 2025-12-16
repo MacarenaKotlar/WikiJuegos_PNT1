@@ -27,7 +27,7 @@ namespace WikiJuegos_PNT1.Controllers
         [HttpPost]
         public async Task<IActionResult> Registro(RegistroVM modelo)
         {
-            if(modelo.Contra != modelo.ConfirmarContra)
+            if (modelo.Contra != modelo.ConfirmarContra)
             {
                 ViewData["Mensaje"] = "Las contraseñas no coinciden";
                 return View();
@@ -42,7 +42,7 @@ namespace WikiJuegos_PNT1.Controllers
             await _context.Usuario.AddAsync(usuario);
             await _context.SaveChangesAsync();
 
-            if(usuario.Id != 0) return RedirectToAction("Login", "Acceso");
+            if (usuario.Id != 0) return RedirectToAction("Login", "Acceso");
 
             ViewData["Mensaje"] = "No se pudo crear el usuario";
             return View();
@@ -63,7 +63,7 @@ namespace WikiJuegos_PNT1.Controllers
                 u.Contra == modelo.Contra
                 ).FirstOrDefaultAsync();
 
-            if(usuario == null)
+            if (usuario == null)
             {
                 ViewData["Mensaje"] = "Nombre de usuario o contraseña incorrecta";
                 return View();
