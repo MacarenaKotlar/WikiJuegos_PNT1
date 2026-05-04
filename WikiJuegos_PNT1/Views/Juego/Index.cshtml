@@ -14,34 +14,52 @@
 </div>
 
 <p>
-    @{
-        var userId = User.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).Select(c => c.Value).SingleOrDefault();
-        if (userId == "1")
-        {
-            <a class="btn btn-outline-primary" asp-action="Create">Crear nuevo juego</a>
-        }
+    @if (User.Identity?.IsAuthenticated == true)
+    {
+        <a class="btn btn-outline-primary" asp-action="Create">Crear nuevo juego</a>
     }
 </p>
 
+
 @if (Model != null && Model.Any())
 {
-    <div class="card-container">
+    <div class="row row-cols-1 row-cols-md-3 g-4"> @* Usamos la grilla de Bootstrap para que se acomoden solos *@
         @foreach (var item in Model)
         {
-            <div class="card">
-                <a asp-action="Details" asp-route-id="@item.Id">
-                    <div class="card-content">
-                        <h4>@item.Nombre</h4>
-                        <hb>
-                        <p>Desarrollador: @item.Desarrollador</p>
-                        <p>Género: @item.Genero</p>
-                    </div>
-                </a>
+            <div class="col">
+                <div class="card h-100 shadow-sm" style="border-radius: 15px; overflow: hidden; transition: transform .2s;">
+                    <a asp-action="Details" asp-route-id="@item.Id" style="text-decoration: none; color: inherit;">
+                        
+                        @* SECCIÓN DE LA IMAGEN *@
+                        @if (!string.IsNullOrEmpty(item.ImagenUrl))
+                        {
+                            <img src="@item.ImagenUrl" class="card-img-top" alt="Portada de @item.Nombre" style="height: 200px; object-fit: cover;">
+                        }
+                        else
+                        {
+                            <div class="bg-dark text-white d-flex align-items-center justify-content-center" style="height: 200px;">
+                                <span class="text-uppercase fw-bold">@item.Nombre</span>
+                            </div>
+                        }
+
+                        <div class="card-body">
+                            <h5 class="card-title text-primary fw-bold">@item.Nombre</h5>
+                            <hr />
+                            <p class="card-text mb-1"><strong>Estudio:</strong> @item.Desarrollador</p>
+                            <p class="card-text"><span class="badge bg-info text-dark">@item.Genero</span></p>
+                        </div>
+                        <div class="card-footer bg-transparent border-top-0 pb-3">
+                            <div class="d-grid">
+                                <span class="btn btn-sm btn-outline-primary">Ver detalles del juego</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
             </div>
         }
     </div>
 }
 else
 {
-    <p>No hay juegos para mostrar.</p>
+    <div class="alert alert-info">Todavía no hay juegos en la wiki. ¡Sé el primero en crear uno!</div>
 }

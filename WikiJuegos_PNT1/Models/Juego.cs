@@ -37,6 +37,16 @@ namespace WikiJuegos_PNT1.Models
         // --- RELACIÓN NUEVA (El Foro) ---
         // Un juego tiene una lista de muchos comentarios
         public List<Comentario>? Comentarios { get; set; }
+    
+
+    [Display(Name = "URL de la Imagen")]
+public string? ImagenUrl { get; set; }
+
+
     }
+
+    
+
 }
+
 
