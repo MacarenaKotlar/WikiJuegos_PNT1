@@ -42,7 +42,9 @@ namespace WikiJuegos_PNT1.Models
     [Display(Name = "URL de la Imagen")]
 public string? ImagenUrl { get; set; }
 
-
+[Range(0, 5, ErrorMessage = "El puntaje debe ser entre 0 y 5.")]
+[Display(Name = "Valoración")]
+public int Rating { get; set; }
     }
 
     

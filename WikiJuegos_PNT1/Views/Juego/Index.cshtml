@@ -23,14 +23,14 @@
 
 @if (Model != null && Model.Any())
 {
-    <div class="row row-cols-1 row-cols-md-3 g-4"> @* Usamos la grilla de Bootstrap para que se acomoden solos *@
+    <div class="row row-cols-1 row-cols-md-3 g-4">
         @foreach (var item in Model)
         {
             <div class="col">
                 <div class="card h-100 shadow-sm" style="border-radius: 15px; overflow: hidden; transition: transform .2s;">
                     <a asp-action="Details" asp-route-id="@item.Id" style="text-decoration: none; color: inherit;">
                         
-                        @* SECCIÓN DE LA IMAGEN *@
+                        @*  SECCIÓN DE LA IMAGEN *@
                         @if (!string.IsNullOrEmpty(item.ImagenUrl))
                         {
                             <img src="@item.ImagenUrl" class="card-img-top" alt="Portada de @item.Nombre" style="height: 200px; object-fit: cover;">
@@ -43,11 +43,25 @@
                         }
 
                         <div class="card-body">
-                            <h5 class="card-title text-primary fw-bold">@item.Nombre</h5>
+                            <h5 class="card-title text-primary fw-bold mb-1">@item.Nombre</h5>
+                            
+                            @* ⭐ SISTEMA DE VALORACIÓN VISUAL *@
+                            <div class="mb-2">
+                                @for (int i = 0; i < item.Rating; i++)
+                                {
+                                    <span class="text-warning">★</span>
+                                }
+                                @for (int i = item.Rating; i < 5; i++)
+                                {
+                                    <span class="text-muted">☆</span>
+                                }
+                            </div>
+
                             <hr />
                             <p class="card-text mb-1"><strong>Estudio:</strong> @item.Desarrollador</p>
                             <p class="card-text"><span class="badge bg-info text-dark">@item.Genero</span></p>
                         </div>
+
                         <div class="card-footer bg-transparent border-top-0 pb-3">
                             <div class="d-grid">
                                 <span class="btn btn-sm btn-outline-primary">Ver detalles del juego</span>

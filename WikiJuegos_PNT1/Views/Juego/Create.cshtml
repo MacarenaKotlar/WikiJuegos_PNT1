@@ -45,7 +45,13 @@
     <span asp-validation-for="ImagenUrl" class="text-danger"></span>
 </div>
 <div class="form-group mb-3">
-                    <input type="submit" value="Crear" class="btn btn-primary" />
+                <label asp-for="Rating" class="control-label fw-bold">Puntaje (1 al 5)</label>
+                <input asp-for="Rating" type="number" class="form-control" min="0" max="5" />
+                <span asp-validation-for="Rating" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <input type="submit" value="Crear" class="btn btn-primary" />
             </div>
         </form>
     </div>
